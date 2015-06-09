@@ -1,35 +1,35 @@
 <?php
 /**
- * Stripe Fetch Transaction Request
+ * Stripe Fetch Transaction Balance Request
  */
 
 namespace Omnipay\Stripe\Message;
 
 /**
- * Stripe Fetch Transaction Request
+ * Stripe Fetch Transaction Balance Request
  *
  * Example -- note this example assumes that the purchase has been successful
- * and that the transaction ID returned from the purchase is held in $sale_id.
+ * and that the transaction balance ID returned from the purchase is held in $balance_transaction.
  * See PurchaseRequest for the first part of this example transaction:
  *
  * <code>
  *   // Fetch the transaction so that details can be found for refund, etc.
- *   $transaction = $gateway->fetchTransaction();
- *   $transaction->setTransactionReference($sale_id);
+ *   $transaction = $gateway->fetchTransactionBalance();
+ *   $transaction->setTransactionBalanceReference($balance_transaction);
  *   $response = $transaction->send();
  *   $data = $response->getData();
- *   echo "Gateway fetchTransaction response data == " . print_r($data, true) . "\n";
+ *   echo "Gateway fetchTransactionBalance response data == " . print_r($data, true) . "\n";
  * </code>
  *
  * @see PurchaseRequest
  * @see Omnipay\Stripe\Gateway
- * @link https://stripe.com/docs/api#retrieve_charge
+ * @link https://stripe.com/docs/api#retrieve_balance_transaction
  */
-class FetchTransactionRequest extends AbstractRequest
+class FetchTransactionBalanceRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('transactionReference');
+        $this->validate('transactionBalanceReference');
 
         $data = array();
 
@@ -42,7 +42,7 @@ class FetchTransactionRequest extends AbstractRequest
 
     public function getEndpoint()
     {
-        return $this->endpoint.'/charges/'.$this->getTransactionReference();
+        return $this->endpoint.'/balance/history/'.$this->getTransactionBalanceReference();
     }
 
     public function getHttpMethod()

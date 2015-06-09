@@ -27,6 +27,20 @@ class Response extends AbstractResponse
     }
 
     /**
+     * Get the transaction balance reference.
+     *
+     * @return string|null
+     */
+    public function getTransactionBalanceReference()
+    {
+        if (isset($this->data['object']) && 'charge' === $this->data['object']) {
+            return $this->data['balance_transaction'];
+        }
+
+        return null;
+    }
+
+    /**
      * Get the transaction reference.
      *
      * @return string|null

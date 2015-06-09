@@ -61,6 +61,23 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
+     * @return mixed
+     */
+    public function getStripeAccount()
+    {
+        return $this->getParameter('stripeAccount');
+    }
+
+    /**
+     * @param string $value
+     * @return AbstractRequest provides a fluent interface.
+     */
+    public function setStripeAccount($value)
+    {
+        return $this->setParameter('stripeAccount', $value);
+    }
+
+    /**
      * @deprecated
      */
     public function getCardToken()
@@ -99,6 +116,27 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('customerReference', $value);
     }
 
+    /**
+     * Get the transaction balance reference.
+     *
+     * @return string
+     */
+    public function getTransactionBalanceReference()
+    {
+        return $this->getParameter('transactionBalanceReference');
+    }
+
+    /**
+     * Sets the transaction balance reference.
+     *
+     * @param string $value
+     * @return AbstractRequest Provides a fluent interface
+     */
+    public function setTransactionBalanceReference($value)
+    {
+        return $this->setParameter('transactionBalanceReference', $value);
+    }
+
     public function getMetadata()
     {
         return $this->getParameter('metadata');
@@ -135,12 +173,21 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             }
         );
 
+        $headers = null;
+
+        if (isset($data['stripe_account'])) {
+            $headers = array();
+            $headers['Stripe-Account'] = $data['stripe_account'];
+            unset($data['stripe_account']);
+        }
+
         $httpRequest = $this->httpClient->createRequest(
             $this->getHttpMethod(),
             $this->getEndpoint(),
-            null,
+            $headers,
             $data
         );
+
         $httpResponse = $httpRequest
             ->setHeader('Authorization', 'Basic '.base64_encode($this->getApiKey().':'))
             ->send();

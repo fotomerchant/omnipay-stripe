@@ -143,6 +143,10 @@ class AuthorizeRequest extends AbstractRequest
         $data['metadata'] = $this->getMetadata();
         $data['capture'] = 'false';
 
+        if ($this->getStripeAccount()) {
+            $data['stripe_account'] = $this->getStripeAccount();
+        }
+
         if ($this->getDestination()) {
             $data['destination'] = $this->getDestination();
         }

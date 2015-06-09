@@ -260,6 +260,15 @@ class Gateway extends AbstractGateway
      * and a card token, and is essentially the same as CreateCustomerRequest
      *
      * @param array $parameters
+     * @return \Omnipay\Stripe\Message\FetchTransactionBalanceRequest
+     */
+    public function fetchTransactionBalance(array $parameters = array())
+    {
+        return $this->createRequest('\Omnipay\Stripe\Message\FetchTransactionBalanceRequest', $parameters);
+    }
+
+    /**
+     * @param array $parameters
      * @return \Omnipay\Stripe\Message\CreateCardRequest
      */
     public function createCard(array $parameters = array())
