@@ -164,6 +164,13 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     public function sendData($data)
     {
+        // Stripe only accepts TLS >= v1.2, so make sure Curl is told
+        $config = $this->httpClient->getConfig();
+        $curlOptions = $config->get('curl.options');
+        $curlOptions[CURLOPT_SSLVERSION] = 6;
+        $config->set('curl.options', $curlOptions);
+        $this->httpClient->setConfig($config);
+        
         // don't throw exceptions for 4xx errors
         $this->httpClient->getEventDispatcher()->addListener(
             'request.error',
@@ -192,8 +199,14 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         $httpResponse = $httpRequest
             ->setHeader('Authorization', 'Basic '.base64_encode($this->getApiKey().':'))
             ->send();
+        
+        $this->response = new Response($this, $httpResponse->json());
+        
+        if ($httpResponse->hasHeader('Request-Id')) {
+            $this->response->setRequestId((string) $httpResponse->getHeader('Request-Id'));
+        }
 
-        return $this->response = new Response($this, $httpResponse->json());
+        return $this->response;
     }
 
     /**
@@ -213,6 +226,7 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     {
         return $this->setParameter('source', $value);
     }
+
 
     /**
      * Get the card data.
