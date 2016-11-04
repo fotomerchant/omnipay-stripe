@@ -131,6 +131,18 @@ class AuthorizeRequest extends AbstractRequest
         return $this->setParameter('applicationFee', $value);
     }
 
+    public function getStatementDescriptor()
+    {
+        return $this->getParameter('statementDescriptor');
+    }
+
+    public function setStatementDescriptor($value)
+    {
+        $value = str_replace(array('<', '>', '"', '\''), '', $value);
+
+        return $this->setParameter('statementDescriptor', $value);
+    }
+
     public function getData()
     {
         $this->validate('amount', 'currency');
@@ -147,6 +159,10 @@ class AuthorizeRequest extends AbstractRequest
             $data['stripe_account'] = $this->getStripeAccount();
         }
 
+        if ($this->getStatementDescriptor()) {
+            $data['statement_descriptor'] = $this->getStatementDescriptor();
+        }
+        
         if ($this->getDestination()) {
             $data['destination'] = $this->getDestination();
         }
