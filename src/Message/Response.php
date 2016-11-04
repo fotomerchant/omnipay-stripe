@@ -27,14 +27,14 @@ class Response extends AbstractResponse
     }
 
     /**
-     * Get the transaction balance reference.
+     * Get the charge reference from the response of FetchChargeRequest.
      *
-     * @return string|null
+     * @return array|null
      */
-    public function getTransactionBalanceReference()
+    public function getChargeReference()
     {
-        if (isset($this->data['object']) && 'charge' === $this->data['object']) {
-            return $this->data['balance_transaction'];
+        if (isset($this->data['object']) && $this->data['object'] == 'charge') {
+            return $this->data['id'];
         }
 
         return null;
