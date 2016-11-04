@@ -117,27 +117,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
         return $this->setParameter('customerReference', $value);
     }
 
-    /**
-     * Get the transaction balance reference.
-     *
-     * @return string
-     */
-    public function getTransactionBalanceReference()
-    {
-        return $this->getParameter('transactionBalanceReference');
-    }
-
-    /**
-     * Sets the transaction balance reference.
-     *
-     * @param string $value
-     * @return AbstractRequest Provides a fluent interface
-     */
-    public function setTransactionBalanceReference($value)
-    {
-        return $this->setParameter('transactionBalanceReference', $value);
-    }
-
     public function getMetadata()
     {
         return $this->getParameter('metadata');
