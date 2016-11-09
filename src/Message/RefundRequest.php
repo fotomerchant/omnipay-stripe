@@ -80,13 +80,18 @@ class RefundRequest extends AbstractRequest
 
     public function getData()
     {
-        $this->validate('transactionReference', 'amount');
+        $this->validate('stripeAccount', 'transactionReference', 'amount');
 
         $data = array();
         $data['amount'] = $this->getAmountInteger();
+        $data['charge'] = $this->getTransactionReference();
 
         if ($this->getRefundApplicationFee()) {
             $data['refund_application_fee'] = 'true';
+        }
+
+        if ($this->getStripeAccount()) {
+            $data['stripe_account'] = $this->getStripeAccount();
         }
 
         return $data;
@@ -94,6 +99,6 @@ class RefundRequest extends AbstractRequest
 
     public function getEndpoint()
     {
-        return $this->endpoint.'/charges/'.$this->getTransactionReference().'/refund';
+        return $this->endpoint.'/refunds';
     }
 }
