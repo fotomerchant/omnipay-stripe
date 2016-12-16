@@ -9,13 +9,15 @@ class RefundRequestTest extends TestCase
     public function setUp()
     {
         $this->request = new RefundRequest($this->getHttpClient(), $this->getHttpRequest());
+        $this->request->setStripeAccount('testaccount');
         $this->request->setTransactionReference('ch_12RgN9L7XhO9mI')
             ->setAmount('10.00')->setRefundApplicationFee(true);
+        $this->request->setStripeAccount('testaccount');
     }
 
     public function testEndpoint()
     {
-        $this->assertSame('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', $this->request->getEndpoint());
+        $this->assertSame('https://api.stripe.com/v1/refunds', $this->request->getEndpoint());
     }
 
     public function testAmount()
