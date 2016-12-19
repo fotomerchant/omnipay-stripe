@@ -29,7 +29,7 @@ class FetchTransactionRequest extends AbstractRequest
 {
     public function getData()
     {
-        $this->validate('transactionReference');
+        $this->validate('stripeAccount', 'transactionReference');
 
         $data = array();
 
