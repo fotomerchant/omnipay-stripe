@@ -33,6 +33,10 @@ class FetchTransactionRequest extends AbstractRequest
 
         $data = array();
 
+        if ($this->getStripeVersion()) {
+            $data['stripe_version'] = $this->getStripeVersion();
+        }
+
         if ($this->getStripeAccount()) {
             $data['stripe_account'] = $this->getStripeAccount();
         }

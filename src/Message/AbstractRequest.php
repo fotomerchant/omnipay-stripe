@@ -79,6 +79,23 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
     }
 
     /**
+     * @return mixed
+     */
+    public function getStripeVersion()
+    {
+        return $this->getParameter('stripeVersion');
+    }
+
+    /**
+     * @param string $value
+     * @return AbstractRequest provides a fluent interface.
+     */
+    public function setStripeVersion($value)
+    {
+        return $this->setParameter('stripeVersion', $value);
+    }
+
+    /**
      * @deprecated
      */
     public function getCardToken()
@@ -166,6 +183,15 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
             $headers = array();
             $headers['Stripe-Account'] = $data['stripe_account'];
             unset($data['stripe_account']);
+        }
+
+        if (isset($data['stripe_version'])) {
+            if (!is_array($headers)) {
+                $headers = [];
+            }
+            
+            $headers['Stripe-Version'] = $data['stripe_version'];
+            unset($data['stripe_version']);
         }
 
         $httpRequest = $this->httpClient->createRequest(

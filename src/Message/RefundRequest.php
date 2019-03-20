@@ -90,6 +90,10 @@ class RefundRequest extends AbstractRequest
             $data['refund_application_fee'] = 'true';
         }
 
+        if ($this->getStripeVersion()) {
+            $data['stripe_version'] = $this->getStripeVersion();
+        }
+
         if ($this->getStripeAccount()) {
             $data['stripe_account'] = $this->getStripeAccount();
         }
