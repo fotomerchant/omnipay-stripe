@@ -71,7 +71,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * @param string $value
-     * @return AbstractRequest provides a fluent interface.
      */
     public function setStripeAccount($value)
     {
@@ -88,7 +87,6 @@ abstract class AbstractRequest extends \Omnipay\Common\Message\AbstractRequest
 
     /**
      * @param string $value
-     * @return AbstractRequest provides a fluent interface.
      */
     public function setStripeVersion($value)
     {
