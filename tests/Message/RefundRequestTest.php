@@ -15,7 +15,7 @@ class RefundRequestTest extends TestCase
 
     public function testEndpoint()
     {
-        $this->assertSame('https://api.stripe.com/v1/charges/ch_12RgN9L7XhO9mI/refund', $this->request->getEndpoint());
+        $this->assertSame('https://api.stripe.com/v1/refunds', $this->request->getEndpoint());
     }
 
     public function testAmount()
@@ -37,7 +37,7 @@ class RefundRequestTest extends TestCase
 
         $this->assertTrue($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertSame('ch_12RgN9L7XhO9mI', $response->getTransactionReference());
+        $this->assertSame('re_1FIVMtAr123ynqearrzfake', $response->getRefundReference());
         $this->assertNull($response->getCardReference());
         $this->assertNull($response->getMessage());
     }
@@ -49,7 +49,7 @@ class RefundRequestTest extends TestCase
 
         $this->assertFalse($response->isSuccessful());
         $this->assertFalse($response->isRedirect());
-        $this->assertNull($response->getTransactionReference());
+        $this->assertNull($response->getRefundReference());
         $this->assertNull($response->getCardReference());
         $this->assertSame('Charge ch_12RgN9L7XhO9mI has already been refunded.', $response->getMessage());
     }

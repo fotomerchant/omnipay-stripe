@@ -40,7 +40,7 @@ namespace Omnipay\Stripe\Message;
  *   $response = $transaction->send();
  *   if ($response->isSuccessful()) {
  *       echo "Refund transaction was successful!\n";
- *       $refund_id = $response->getTransactionReference();
+ *       $refund_id = $response->getRefundReference();
  *       echo "Transaction reference = " . $refund_id . "\n";
  *   }
  * </code>

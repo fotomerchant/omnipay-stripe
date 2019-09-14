@@ -1,3 +1,9 @@
 HTTP/1.1 200 OK
 
-{"error":{"message":"Charge ch_12RgN9L7XhO9mI has already been refunded."}}
+{
+  "error": {
+    "code": "charge_already_refunded",
+    "message": "Charge ch_12RgN9L7XhO9mI has already been refunded.",
+    "type": "invalid_request_error"
+  }
+}

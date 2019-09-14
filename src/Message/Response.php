@@ -101,6 +101,23 @@ class Response extends AbstractResponse implements RedirectResponseInterface
     }
 
     /**
+     * Get the transaction reference.
+     *
+     * @return string|null
+     */
+    public function getRefundReference()
+    {
+        if (isset($this->data['object']) && 'refund' === $this->data['object']) {
+            return $this->data['id'];
+        }
+        if (isset($this->data['error']) && isset($this->data['error']['refund'])) {
+            return $this->data['error']['refund'];
+        }
+
+        return null;
+    }
+
+    /**
      * Get the balance transaction reference.
      *
      * @return string|null
