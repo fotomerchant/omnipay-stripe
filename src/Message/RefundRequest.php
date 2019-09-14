@@ -114,6 +114,7 @@ class RefundRequest extends AbstractRequest
 
         $data = array();
         $data['amount'] = $this->getAmountInteger();
+        $data['charge'] = $this->getTransactionReference();
 
         if ($this->getRefundApplicationFee()) {
             $data['refund_application_fee'] = 'true';
@@ -128,6 +129,6 @@ class RefundRequest extends AbstractRequest
 
     public function getEndpoint()
     {
-        return $this->endpoint.'/charges/'.$this->getTransactionReference().'/refund';
+        return $this->endpoint.'/refunds';
     }
 }
